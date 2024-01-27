@@ -41,23 +41,24 @@ module Riu
       # require "debug"; debugger
       loop do
         text = Reline.readline(prompt, use_history)
-        case text
-        when nil
-          break
-        when ""
-          puts "Use C-d to exit"
-        else
-          name = @ri.expand_name(text)
-          filtered = @ri.lookup_method(name)
 
-          method_out = @ri.method_document(name, filtered)
-          visitor = Visitor.new
-          method_out.parts.each { |part| part.accept(visitor) }
-          # @ri.find_methods(name) do |store, klass, ancestor, types, method|
-          #   p "Klass: #{klass} #{method}"
-          #   p TYPES: types
-          # end
+        break if text.nil?
+
+        if text.empty?
+          puts "Use C-d to exit"
+          next
         end
+
+        name = @ri.expand_name(text)
+        filtered = @ri.lookup_method(name)
+
+        method_out = @ri.method_document(name, filtered)
+        visitor = Visitor.new
+        method_out.parts.each { |part| part.accept(visitor) }
+        # @ri.find_methods(name) do |store, klass, ancestor, types, method|
+        #   p "Klass: #{klass} #{method}"
+        #   p TYPES: types
+        # end
       rescue RDoc::RI::Driver::NotFoundError
         puts "Not found"
       end
