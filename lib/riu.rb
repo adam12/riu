@@ -50,7 +50,7 @@ module Riu
           name = @ri.expand_name(text)
           filtered = @ri.lookup_method(name)
 
-          method_out = @ri.method_document("Zlib.crc32", filtered)
+          method_out = @ri.method_document(name, filtered)
           visitor = Visitor.new
           method_out.parts.each { |part| part.accept(visitor) }
           # @ri.find_methods(name) do |store, klass, ancestor, types, method|
