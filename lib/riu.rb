@@ -23,6 +23,28 @@ module Riu
     def accept_verbatim(v)
       puts v.text
     end
+
+    def accept_list_start(v)
+      # p "LIST START"
+      # require "debug"; debugger
+      # p v.text
+      # v.accept(self)
+    end
+
+    def accept_list_end(v)
+      p "LIST END"
+    end
+
+    def accept_list_item_start(v)
+      # visitor = Visitor.new
+      # v.accept(visitor)
+      # puts "\t
+      # p START: v
+    end
+
+    def accept_list_item_end(v)
+      # p END: v
+    end
   end
 
   class CLI
@@ -38,7 +60,6 @@ module Riu
     end
 
     def run
-      # require "debug"; debugger
       loop do
         text = Reline.readline(prompt, use_history)
 
